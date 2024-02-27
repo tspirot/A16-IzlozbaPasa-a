@@ -78,6 +78,9 @@ namespace A16_IzlozbaPasa_a
                 comboBoxIzlozba.DataSource = tabela;
                 comboBoxIzlozba.DisplayMember = "ImeIzlozbe";
                 comboBoxIzlozba.ValueMember = "IzlozbaID";
+                comboBox1.DataSource = tabela;
+                comboBox1.DisplayMember = "ImeIzlozbe";
+                comboBox1.ValueMember = "IzlozbaID";
             }
             catch (Exception)
             {
@@ -101,6 +104,7 @@ namespace A16_IzlozbaPasa_a
                 DataTable tabela = new DataTable();
                 SqlDataAdapter adapter = new SqlDataAdapter(komanda);
                 adapter.Fill(tabela);
+
                 comboBoxKategorija.DataSource = tabela;
                 comboBoxKategorija.DisplayMember = "ImeKategorije";
                 comboBoxKategorija.ValueMember = "KategorijaID";
@@ -115,5 +119,60 @@ namespace A16_IzlozbaPasa_a
             }
         }
 
+        private void buttonDodaj_Click(object sender, EventArgs e)
+        {
+            // provera da li je pas prijavljen
+            string sqlProvera = "SELECT * FROM Rezultat " +
+                "WHERE PasID=@PasID " +
+                "AND IzlozbaID=@IzlozbaID " +
+                "AND KategorijaID=@KategorijaID";
+            SqlCommand komandaProvera = new 
+                SqlCommand(sqlProvera, konekcija);
+            komandaProvera.Parameters.AddWithValue
+                ("@PasID", comboBoxPas.SelectedValue);
+            komandaProvera.Parameters.AddWithValue
+                ("@IzlozbaID", comboBoxIzlozba.SelectedValue);
+            komandaProvera.Parameters.AddWithValue
+                ("@KategorijaID", comboBoxKategorija.SelectedValue);
+            SqlDataAdapter ad= new SqlDataAdapter(komandaProvera);
+            DataTable dt = new DataTable();
+            ad.Fill(dt);
+            if (dt.Rows.Count > 0)
+            {
+                MessageBox.Show("Pas je vec prijavljen!");
+                return;
+            }
+            // prijava psa
+            string sqlPrijava = "INSERT INTO Rezultat " +
+                "(PasID,IzlozbaID,KategorijaID) " +
+                "VALUES (@PasID,@IzlozbaID,@KategorijaID)";
+            SqlCommand komandaPrijava = new SqlCommand
+                (sqlPrijava, konekcija);
+            komandaPrijava.Parameters.AddWithValue
+                ("@PasID", comboBoxPas.SelectedValue);
+            komandaPrijava.Parameters.AddWithValue
+                ("@IzlozbaID", comboBoxIzlozba.SelectedValue);
+            komandaPrijava.Parameters.AddWithValue
+                ("@KategorijaID", comboBoxKategorija.SelectedValue);
+            try
+            {
+                konekcija.Open();
+                komandaPrijava.ExecuteNonQuery();
+                MessageBox.Show("Pas je uspesno prijavljen!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Greska pri prijavi psa! " + ex.Message);
+            }
+            finally
+            {
+                konekcija.Close();
+            }
+        }
+
+        private void buttonZatvori_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
