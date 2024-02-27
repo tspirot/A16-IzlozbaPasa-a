@@ -174,5 +174,67 @@ namespace A16_IzlozbaPasa_a
         {
             this.Close();
         }
+
+        private void buttonPrikazi_Click(object sender, EventArgs e)
+        {
+            string upit = "SELECT Kategorija.KategorijaID AS SifraKategorije, " +
+                "Kategorija.Naziv AS NazivKategorije, " +
+                "COUNT(*) AS BrojPasa " +
+                "FROM Kategorija, Rezultat " +
+                "WHERE Kategorija.KategorijaID=Rezultat.KategorijaID " +
+                "AND Rezultat.IzlozbaID=@IzlozbaID " +
+                "GROUP BY Kategorija.KategorijaID, Kategorija.Naziv";
+            SqlCommand komanda = new SqlCommand(upit, konekcija);
+            komanda.Parameters.AddWithValue("@IzlozbaID", comboBox1.SelectedValue); 
+            try
+            {
+                konekcija.Open();
+                SqlDataReader citac = komanda.ExecuteReader();
+                DataTable tabela = new DataTable();
+                tabela.Load(citac);
+                dataGridView1.DataSource = tabela;
+                // chart
+                chart1.DataSource = tabela;
+                chart1.Series[0].XValueMember = "NazivKategorije";
+                chart1.Series[0].YValueMembers = "BrojPasa";
+                chart1.Series[0].IsValueShownAsLabel = true;
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Greska pri citanju podataka! " + ex.Message);
+            }
+            finally
+            {
+                konekcija.Close();
+            }
+            // prijavljeno/izaslo
+            string upitPrijavljeno = "SELECT COUNT(*) FROM Rezultat " +
+                "WHERE IzlozbaID=@IzlozbaID";
+            string upitIzaslo = "SELECT COUNT(*) FROM Rezultat " +
+                "WHERE IzlozbaID=@IzlozbaID " +
+                "AND LEN(Napomena)>0";
+            SqlCommand komandaPrijavljeno = new SqlCommand(upitPrijavljeno, konekcija);
+            komandaPrijavljeno.Parameters.AddWithValue("@IzlozbaID", comboBox1.SelectedValue);
+            SqlCommand komandaIzaslo = new SqlCommand(upitIzaslo, konekcija);
+            komandaIzaslo.Parameters.AddWithValue("@IzlozbaID", comboBox1.SelectedValue);
+            try
+            {
+                konekcija.Open();
+                int prijavljeno = (int)komandaPrijavljeno.ExecuteScalar();
+                int izaslo = (int)komandaIzaslo.ExecuteScalar();
+                labelPrijavljeno.Text = "Ukupan broj pasa koji je prijavljen: " + prijavljeno;
+                labelIzaslo.Text = "Ukupan broj pasa koji se takmičio: " + izaslo;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Greska pri citanju podataka! " + ex.Message);
+            }
+            finally
+            {
+                konekcija.Close();
+            }
+
+        }
     }
 }
