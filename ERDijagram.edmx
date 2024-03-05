@@ -1,0 +1,656 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="A16Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Boja">
+          <Key>
+            <PropertyRef Name="BojaID" />
+          </Key>
+          <Property Name="BojaID" Type="int" Nullable="false" />
+          <Property Name="Boja" Type="nchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Duzina_Dlake">
+          <Key>
+            <PropertyRef Name="DDID" />
+          </Key>
+          <Property Name="DDID" Type="int" Nullable="false" />
+          <Property Name="Duzina" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Izlozba">
+          <Key>
+            <PropertyRef Name="IzlozbaID" />
+          </Key>
+          <Property Name="IzlozbaID" Type="int" Nullable="false" />
+          <Property Name="Mesto" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Datum" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kategorija">
+          <Key>
+            <PropertyRef Name="KategorijaID" />
+          </Key>
+          <Property Name="KategorijaID" Type="int" Nullable="false" />
+          <Property Name="Naziv" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Odgajivacnice">
+          <Key>
+            <PropertyRef Name="OdgajivacniceId" />
+          </Key>
+          <Property Name="OdgajivacniceId" Type="int" Nullable="false" />
+          <Property Name="Naziv" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="BrTelefona" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Adresa" Type="nvarchar" MaxLength="50" />
+          <Property Name="Drzava" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Pas">
+          <Key>
+            <PropertyRef Name="PasID" />
+          </Key>
+          <Property Name="PasID" Type="int" Nullable="false" />
+          <Property Name="Ime" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="Tezina" Type="int" Nullable="false" />
+          <Property Name="DDID" Type="int" Nullable="false" />
+          <Property Name="BojaID" Type="int" Nullable="false" />
+          <Property Name="RasaID" Type="int" Nullable="false" />
+          <Property Name="Ostenjen" Type="bit" Nullable="false" />
+          <Property Name="VlasnikID" Type="int" Nullable="false" />
+          <Property Name="PolID" Type="int" Nullable="false" />
+          <Property Name="OdgajivacnicaId" Type="int" />
+        </EntityType>
+        <EntityType Name="Pol">
+          <Key>
+            <PropertyRef Name="PolID" />
+          </Key>
+          <Property Name="PolID" Type="int" Nullable="false" />
+          <Property Name="Pol" Type="nchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rasa">
+          <Key>
+            <PropertyRef Name="RasaID" />
+          </Key>
+          <Property Name="RasaID" Type="int" Nullable="false" />
+          <Property Name="NazivRase" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="Napomena" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Rezultat">
+          <Key>
+            <PropertyRef Name="IzlozbaID" />
+            <PropertyRef Name="KategorijaID" />
+            <PropertyRef Name="PasID" />
+          </Key>
+          <Property Name="IzlozbaID" Type="int" Nullable="false" />
+          <Property Name="KategorijaID" Type="int" Nullable="false" />
+          <Property Name="PasID" Type="int" Nullable="false" />
+          <Property Name="Rezultat" Type="nchar" MaxLength="50" />
+          <Property Name="Napomena" Type="nchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Vlasnik">
+          <Key>
+            <PropertyRef Name="VlasnikID" />
+          </Key>
+          <Property Name="VlasnikID" Type="int" Nullable="false" />
+          <Property Name="Ime" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="Prezime" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="Adresa" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="JMBG" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Pas_Odgajivacnica">
+          <End Role="Odgajivacnice" Type="Self.Odgajivacnice" Multiplicity="0..1" />
+          <End Role="Pas" Type="Self.Pas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Odgajivacnice">
+              <PropertyRef Name="OdgajivacniceId" />
+            </Principal>
+            <Dependent Role="Pas">
+              <PropertyRef Name="OdgajivacnicaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pas_ToBoja">
+          <End Role="Boja" Type="Self.Boja" Multiplicity="1" />
+          <End Role="Pas" Type="Self.Pas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Boja">
+              <PropertyRef Name="BojaID" />
+            </Principal>
+            <Dependent Role="Pas">
+              <PropertyRef Name="BojaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pas_ToDuzina_Dlake">
+          <End Role="Duzina_Dlake" Type="Self.Duzina_Dlake" Multiplicity="1" />
+          <End Role="Pas" Type="Self.Pas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Duzina_Dlake">
+              <PropertyRef Name="DDID" />
+            </Principal>
+            <Dependent Role="Pas">
+              <PropertyRef Name="DDID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pas_ToPol">
+          <End Role="Pol" Type="Self.Pol" Multiplicity="1" />
+          <End Role="Pas" Type="Self.Pas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pol">
+              <PropertyRef Name="PolID" />
+            </Principal>
+            <Dependent Role="Pas">
+              <PropertyRef Name="PolID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pas_ToRasa">
+          <End Role="Rasa" Type="Self.Rasa" Multiplicity="1" />
+          <End Role="Pas" Type="Self.Pas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rasa">
+              <PropertyRef Name="RasaID" />
+            </Principal>
+            <Dependent Role="Pas">
+              <PropertyRef Name="RasaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pas_ToVlasnik">
+          <End Role="Vlasnik" Type="Self.Vlasnik" Multiplicity="1" />
+          <End Role="Pas" Type="Self.Pas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vlasnik">
+              <PropertyRef Name="VlasnikID" />
+            </Principal>
+            <Dependent Role="Pas">
+              <PropertyRef Name="VlasnikID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rezultat_Izlozba">
+          <End Role="Izlozba" Type="Self.Izlozba" Multiplicity="1" />
+          <End Role="Rezultat" Type="Self.Rezultat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Izlozba">
+              <PropertyRef Name="IzlozbaID" />
+            </Principal>
+            <Dependent Role="Rezultat">
+              <PropertyRef Name="IzlozbaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rezultat_Kategorija">
+          <End Role="Kategorija" Type="Self.Kategorija" Multiplicity="1" />
+          <End Role="Rezultat" Type="Self.Rezultat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategorija">
+              <PropertyRef Name="KategorijaID" />
+            </Principal>
+            <Dependent Role="Rezultat">
+              <PropertyRef Name="KategorijaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rezultat_ToTable_2">
+          <End Role="Pas" Type="Self.Pas" Multiplicity="1" />
+          <End Role="Rezultat" Type="Self.Rezultat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pas">
+              <PropertyRef Name="PasID" />
+            </Principal>
+            <Dependent Role="Rezultat">
+              <PropertyRef Name="PasID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="A16ModelStoreContainer">
+          <EntitySet Name="Boja" EntityType="Self.Boja" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Duzina_Dlake" EntityType="Self.Duzina_Dlake" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Izlozba" EntityType="Self.Izlozba" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kategorija" EntityType="Self.Kategorija" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Odgajivacnice" EntityType="Self.Odgajivacnice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pas" EntityType="Self.Pas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pol" EntityType="Self.Pol" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rasa" EntityType="Self.Rasa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rezultat" EntityType="Self.Rezultat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vlasnik" EntityType="Self.Vlasnik" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Pas_Odgajivacnica" Association="Self.FK_Pas_Odgajivacnica">
+            <End Role="Odgajivacnice" EntitySet="Odgajivacnice" />
+            <End Role="Pas" EntitySet="Pas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pas_ToBoja" Association="Self.FK_Pas_ToBoja">
+            <End Role="Boja" EntitySet="Boja" />
+            <End Role="Pas" EntitySet="Pas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pas_ToDuzina_Dlake" Association="Self.FK_Pas_ToDuzina_Dlake">
+            <End Role="Duzina_Dlake" EntitySet="Duzina_Dlake" />
+            <End Role="Pas" EntitySet="Pas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pas_ToPol" Association="Self.FK_Pas_ToPol">
+            <End Role="Pol" EntitySet="Pol" />
+            <End Role="Pas" EntitySet="Pas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pas_ToRasa" Association="Self.FK_Pas_ToRasa">
+            <End Role="Rasa" EntitySet="Rasa" />
+            <End Role="Pas" EntitySet="Pas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pas_ToVlasnik" Association="Self.FK_Pas_ToVlasnik">
+            <End Role="Vlasnik" EntitySet="Vlasnik" />
+            <End Role="Pas" EntitySet="Pas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rezultat_Izlozba" Association="Self.FK_Rezultat_Izlozba">
+            <End Role="Izlozba" EntitySet="Izlozba" />
+            <End Role="Rezultat" EntitySet="Rezultat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rezultat_Kategorija" Association="Self.FK_Rezultat_Kategorija">
+            <End Role="Kategorija" EntitySet="Kategorija" />
+            <End Role="Rezultat" EntitySet="Rezultat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rezultat_ToTable_2" Association="Self.FK_Rezultat_ToTable_2">
+            <End Role="Pas" EntitySet="Pas" />
+            <End Role="Rezultat" EntitySet="Rezultat" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="A16Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Boja">
+          <Key>
+            <PropertyRef Name="BojaID" />
+          </Key>
+          <Property Name="BojaID" Type="Int32" Nullable="false" />
+          <Property Name="Boja1" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Pas" Relationship="Self.FK_Pas_ToBoja" FromRole="Boja" ToRole="Pas" />
+        </EntityType>
+        <EntityType Name="Duzina_Dlake">
+          <Key>
+            <PropertyRef Name="DDID" />
+          </Key>
+          <Property Name="DDID" Type="Int32" Nullable="false" />
+          <Property Name="Duzina" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Pas" Relationship="Self.FK_Pas_ToDuzina_Dlake" FromRole="Duzina_Dlake" ToRole="Pas" />
+        </EntityType>
+        <EntityType Name="Izlozba">
+          <Key>
+            <PropertyRef Name="IzlozbaID" />
+          </Key>
+          <Property Name="IzlozbaID" Type="Int32" Nullable="false" />
+          <Property Name="Mesto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Datum" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Rezultat" Relationship="Self.FK_Rezultat_Izlozba" FromRole="Izlozba" ToRole="Rezultat" />
+        </EntityType>
+        <EntityType Name="Kategorija">
+          <Key>
+            <PropertyRef Name="KategorijaID" />
+          </Key>
+          <Property Name="KategorijaID" Type="Int32" Nullable="false" />
+          <Property Name="Naziv" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Rezultat" Relationship="Self.FK_Rezultat_Kategorija" FromRole="Kategorija" ToRole="Rezultat" />
+        </EntityType>
+        <EntityType Name="Odgajivacnice">
+          <Key>
+            <PropertyRef Name="OdgajivacniceId" />
+          </Key>
+          <Property Name="OdgajivacniceId" Type="Int32" Nullable="false" />
+          <Property Name="Naziv" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BrTelefona" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Adresa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Drzava" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Pas" Relationship="Self.FK_Pas_Odgajivacnica" FromRole="Odgajivacnice" ToRole="Pas" />
+        </EntityType>
+        <EntityType Name="Pas">
+          <Key>
+            <PropertyRef Name="PasID" />
+          </Key>
+          <Property Name="PasID" Type="Int32" Nullable="false" />
+          <Property Name="Ime" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Tezina" Type="Int32" Nullable="false" />
+          <Property Name="DDID" Type="Int32" Nullable="false" />
+          <Property Name="BojaID" Type="Int32" Nullable="false" />
+          <Property Name="RasaID" Type="Int32" Nullable="false" />
+          <Property Name="Ostenjen" Type="Boolean" Nullable="false" />
+          <Property Name="VlasnikID" Type="Int32" Nullable="false" />
+          <Property Name="PolID" Type="Int32" Nullable="false" />
+          <Property Name="OdgajivacnicaId" Type="Int32" />
+          <NavigationProperty Name="Boja" Relationship="Self.FK_Pas_ToBoja" FromRole="Pas" ToRole="Boja" />
+          <NavigationProperty Name="Duzina_Dlake" Relationship="Self.FK_Pas_ToDuzina_Dlake" FromRole="Pas" ToRole="Duzina_Dlake" />
+          <NavigationProperty Name="Odgajivacnice" Relationship="Self.FK_Pas_Odgajivacnica" FromRole="Pas" ToRole="Odgajivacnice" />
+          <NavigationProperty Name="Pol" Relationship="Self.FK_Pas_ToPol" FromRole="Pas" ToRole="Pol" />
+          <NavigationProperty Name="Rasa" Relationship="Self.FK_Pas_ToRasa" FromRole="Pas" ToRole="Rasa" />
+          <NavigationProperty Name="Vlasnik" Relationship="Self.FK_Pas_ToVlasnik" FromRole="Pas" ToRole="Vlasnik" />
+          <NavigationProperty Name="Rezultat" Relationship="Self.FK_Rezultat_ToTable_2" FromRole="Pas" ToRole="Rezultat" />
+        </EntityType>
+        <EntityType Name="Pol">
+          <Key>
+            <PropertyRef Name="PolID" />
+          </Key>
+          <Property Name="PolID" Type="Int32" Nullable="false" />
+          <Property Name="Pol1" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Pas" Relationship="Self.FK_Pas_ToPol" FromRole="Pol" ToRole="Pas" />
+        </EntityType>
+        <EntityType Name="Rasa">
+          <Key>
+            <PropertyRef Name="RasaID" />
+          </Key>
+          <Property Name="RasaID" Type="Int32" Nullable="false" />
+          <Property Name="NazivRase" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Napomena" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Pas" Relationship="Self.FK_Pas_ToRasa" FromRole="Rasa" ToRole="Pas" />
+        </EntityType>
+        <EntityType Name="Rezultat">
+          <Key>
+            <PropertyRef Name="IzlozbaID" />
+            <PropertyRef Name="KategorijaID" />
+            <PropertyRef Name="PasID" />
+          </Key>
+          <Property Name="IzlozbaID" Type="Int32" Nullable="false" />
+          <Property Name="KategorijaID" Type="Int32" Nullable="false" />
+          <Property Name="PasID" Type="Int32" Nullable="false" />
+          <Property Name="Rezultat1" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Napomena" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Izlozba" Relationship="Self.FK_Rezultat_Izlozba" FromRole="Rezultat" ToRole="Izlozba" />
+          <NavigationProperty Name="Kategorija" Relationship="Self.FK_Rezultat_Kategorija" FromRole="Rezultat" ToRole="Kategorija" />
+          <NavigationProperty Name="Pas" Relationship="Self.FK_Rezultat_ToTable_2" FromRole="Rezultat" ToRole="Pas" />
+        </EntityType>
+        <EntityType Name="Vlasnik">
+          <Key>
+            <PropertyRef Name="VlasnikID" />
+          </Key>
+          <Property Name="VlasnikID" Type="Int32" Nullable="false" />
+          <Property Name="Ime" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Prezime" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Adresa" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="JMBG" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Pas" Relationship="Self.FK_Pas_ToVlasnik" FromRole="Vlasnik" ToRole="Pas" />
+        </EntityType>
+        <Association Name="FK_Pas_ToBoja">
+          <End Role="Boja" Type="Self.Boja" Multiplicity="1" />
+          <End Role="Pas" Type="Self.Pas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Boja">
+              <PropertyRef Name="BojaID" />
+            </Principal>
+            <Dependent Role="Pas">
+              <PropertyRef Name="BojaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pas_ToDuzina_Dlake">
+          <End Role="Duzina_Dlake" Type="Self.Duzina_Dlake" Multiplicity="1" />
+          <End Role="Pas" Type="Self.Pas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Duzina_Dlake">
+              <PropertyRef Name="DDID" />
+            </Principal>
+            <Dependent Role="Pas">
+              <PropertyRef Name="DDID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rezultat_Izlozba">
+          <End Role="Izlozba" Type="Self.Izlozba" Multiplicity="1" />
+          <End Role="Rezultat" Type="Self.Rezultat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Izlozba">
+              <PropertyRef Name="IzlozbaID" />
+            </Principal>
+            <Dependent Role="Rezultat">
+              <PropertyRef Name="IzlozbaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rezultat_Kategorija">
+          <End Role="Kategorija" Type="Self.Kategorija" Multiplicity="1" />
+          <End Role="Rezultat" Type="Self.Rezultat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kategorija">
+              <PropertyRef Name="KategorijaID" />
+            </Principal>
+            <Dependent Role="Rezultat">
+              <PropertyRef Name="KategorijaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pas_Odgajivacnica">
+          <End Role="Odgajivacnice" Type="Self.Odgajivacnice" Multiplicity="0..1" />
+          <End Role="Pas" Type="Self.Pas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Odgajivacnice">
+              <PropertyRef Name="OdgajivacniceId" />
+            </Principal>
+            <Dependent Role="Pas">
+              <PropertyRef Name="OdgajivacnicaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pas_ToPol">
+          <End Role="Pol" Type="Self.Pol" Multiplicity="1" />
+          <End Role="Pas" Type="Self.Pas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pol">
+              <PropertyRef Name="PolID" />
+            </Principal>
+            <Dependent Role="Pas">
+              <PropertyRef Name="PolID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pas_ToRasa">
+          <End Role="Rasa" Type="Self.Rasa" Multiplicity="1" />
+          <End Role="Pas" Type="Self.Pas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rasa">
+              <PropertyRef Name="RasaID" />
+            </Principal>
+            <Dependent Role="Pas">
+              <PropertyRef Name="RasaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pas_ToVlasnik">
+          <End Role="Vlasnik" Type="Self.Vlasnik" Multiplicity="1" />
+          <End Role="Pas" Type="Self.Pas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vlasnik">
+              <PropertyRef Name="VlasnikID" />
+            </Principal>
+            <Dependent Role="Pas">
+              <PropertyRef Name="VlasnikID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rezultat_ToTable_2">
+          <End Role="Pas" Type="Self.Pas" Multiplicity="1" />
+          <End Role="Rezultat" Type="Self.Rezultat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pas">
+              <PropertyRef Name="PasID" />
+            </Principal>
+            <Dependent Role="Rezultat">
+              <PropertyRef Name="PasID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="A16Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Boja" EntityType="Self.Boja" />
+          <EntitySet Name="Duzina_Dlake" EntityType="Self.Duzina_Dlake" />
+          <EntitySet Name="Izlozba" EntityType="Self.Izlozba" />
+          <EntitySet Name="Kategorija" EntityType="Self.Kategorija" />
+          <EntitySet Name="Odgajivacnice" EntityType="Self.Odgajivacnice" />
+          <EntitySet Name="Pas" EntityType="Self.Pas" />
+          <EntitySet Name="Pol" EntityType="Self.Pol" />
+          <EntitySet Name="Rasa" EntityType="Self.Rasa" />
+          <EntitySet Name="Rezultat" EntityType="Self.Rezultat" />
+          <EntitySet Name="Vlasnik" EntityType="Self.Vlasnik" />
+          <AssociationSet Name="FK_Pas_ToBoja" Association="Self.FK_Pas_ToBoja">
+            <End Role="Boja" EntitySet="Boja" />
+            <End Role="Pas" EntitySet="Pas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pas_ToDuzina_Dlake" Association="Self.FK_Pas_ToDuzina_Dlake">
+            <End Role="Duzina_Dlake" EntitySet="Duzina_Dlake" />
+            <End Role="Pas" EntitySet="Pas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rezultat_Izlozba" Association="Self.FK_Rezultat_Izlozba">
+            <End Role="Izlozba" EntitySet="Izlozba" />
+            <End Role="Rezultat" EntitySet="Rezultat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rezultat_Kategorija" Association="Self.FK_Rezultat_Kategorija">
+            <End Role="Kategorija" EntitySet="Kategorija" />
+            <End Role="Rezultat" EntitySet="Rezultat" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pas_Odgajivacnica" Association="Self.FK_Pas_Odgajivacnica">
+            <End Role="Odgajivacnice" EntitySet="Odgajivacnice" />
+            <End Role="Pas" EntitySet="Pas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pas_ToPol" Association="Self.FK_Pas_ToPol">
+            <End Role="Pol" EntitySet="Pol" />
+            <End Role="Pas" EntitySet="Pas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pas_ToRasa" Association="Self.FK_Pas_ToRasa">
+            <End Role="Rasa" EntitySet="Rasa" />
+            <End Role="Pas" EntitySet="Pas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pas_ToVlasnik" Association="Self.FK_Pas_ToVlasnik">
+            <End Role="Vlasnik" EntitySet="Vlasnik" />
+            <End Role="Pas" EntitySet="Pas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rezultat_ToTable_2" Association="Self.FK_Rezultat_ToTable_2">
+            <End Role="Pas" EntitySet="Pas" />
+            <End Role="Rezultat" EntitySet="Rezultat" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="A16ModelStoreContainer" CdmEntityContainer="A16Entities">
+          <EntitySetMapping Name="Boja">
+            <EntityTypeMapping TypeName="A16Model.Boja">
+              <MappingFragment StoreEntitySet="Boja">
+                <ScalarProperty Name="BojaID" ColumnName="BojaID" />
+                <ScalarProperty Name="Boja1" ColumnName="Boja" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Duzina_Dlake">
+            <EntityTypeMapping TypeName="A16Model.Duzina_Dlake">
+              <MappingFragment StoreEntitySet="Duzina_Dlake">
+                <ScalarProperty Name="DDID" ColumnName="DDID" />
+                <ScalarProperty Name="Duzina" ColumnName="Duzina" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Izlozba">
+            <EntityTypeMapping TypeName="A16Model.Izlozba">
+              <MappingFragment StoreEntitySet="Izlozba">
+                <ScalarProperty Name="IzlozbaID" ColumnName="IzlozbaID" />
+                <ScalarProperty Name="Mesto" ColumnName="Mesto" />
+                <ScalarProperty Name="Datum" ColumnName="Datum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kategorija">
+            <EntityTypeMapping TypeName="A16Model.Kategorija">
+              <MappingFragment StoreEntitySet="Kategorija">
+                <ScalarProperty Name="KategorijaID" ColumnName="KategorijaID" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Odgajivacnice">
+            <EntityTypeMapping TypeName="A16Model.Odgajivacnice">
+              <MappingFragment StoreEntitySet="Odgajivacnice">
+                <ScalarProperty Name="OdgajivacniceId" ColumnName="OdgajivacniceId" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="BrTelefona" ColumnName="BrTelefona" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+                <ScalarProperty Name="Drzava" ColumnName="Drzava" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pas">
+            <EntityTypeMapping TypeName="A16Model.Pas">
+              <MappingFragment StoreEntitySet="Pas">
+                <ScalarProperty Name="PasID" ColumnName="PasID" />
+                <ScalarProperty Name="Ime" ColumnName="Ime" />
+                <ScalarProperty Name="Tezina" ColumnName="Tezina" />
+                <ScalarProperty Name="DDID" ColumnName="DDID" />
+                <ScalarProperty Name="BojaID" ColumnName="BojaID" />
+                <ScalarProperty Name="RasaID" ColumnName="RasaID" />
+                <ScalarProperty Name="Ostenjen" ColumnName="Ostenjen" />
+                <ScalarProperty Name="VlasnikID" ColumnName="VlasnikID" />
+                <ScalarProperty Name="PolID" ColumnName="PolID" />
+                <ScalarProperty Name="OdgajivacnicaId" ColumnName="OdgajivacnicaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pol">
+            <EntityTypeMapping TypeName="A16Model.Pol">
+              <MappingFragment StoreEntitySet="Pol">
+                <ScalarProperty Name="PolID" ColumnName="PolID" />
+                <ScalarProperty Name="Pol1" ColumnName="Pol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rasa">
+            <EntityTypeMapping TypeName="A16Model.Rasa">
+              <MappingFragment StoreEntitySet="Rasa">
+                <ScalarProperty Name="RasaID" ColumnName="RasaID" />
+                <ScalarProperty Name="NazivRase" ColumnName="NazivRase" />
+                <ScalarProperty Name="Napomena" ColumnName="Napomena" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rezultat">
+            <EntityTypeMapping TypeName="A16Model.Rezultat">
+              <MappingFragment StoreEntitySet="Rezultat">
+                <ScalarProperty Name="IzlozbaID" ColumnName="IzlozbaID" />
+                <ScalarProperty Name="KategorijaID" ColumnName="KategorijaID" />
+                <ScalarProperty Name="PasID" ColumnName="PasID" />
+                <ScalarProperty Name="Rezultat1" ColumnName="Rezultat" />
+                <ScalarProperty Name="Napomena" ColumnName="Napomena" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vlasnik">
+            <EntityTypeMapping TypeName="A16Model.Vlasnik">
+              <MappingFragment StoreEntitySet="Vlasnik">
+                <ScalarProperty Name="VlasnikID" ColumnName="VlasnikID" />
+                <ScalarProperty Name="Ime" ColumnName="Ime" />
+                <ScalarProperty Name="Prezime" ColumnName="Prezime" />
+                <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+                <ScalarProperty Name="JMBG" ColumnName="JMBG" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
