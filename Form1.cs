@@ -27,7 +27,8 @@ namespace A16_IzlozbaPasa_a
                 konekcija = new SqlConnection
             (@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\A16.mdf;Integrated Security=True");
                 osveziPse();
-                osveziIzlozbe();
+                osveziIzlozbe1();
+                osveziIzlozbe2();
                 osveziKategorije();
             }
             catch (Exception ex)
@@ -62,15 +63,18 @@ namespace A16_IzlozbaPasa_a
             }
         }
         // osvezi combo box izlozbi
-        private void osveziIzlozbe()
+        private void osveziIzlozbe1()
         {
 
             try
             {
                 konekcija.Open();
                 SqlCommand komanda = new SqlCommand
-                    ("SELECT IzlozbaID,CONCAT(IzlozbaID,' - ',Mesto," +
-                    "' - ',Datum) AS ImeIzlozbe FROM Izlozba",
+                    ("SELECT IzlozbaID," +
+                    "CONCAT(IzlozbaID,' - ',Mesto,' - ',Datum) " +
+                    "AS ImeIzlozbe " +
+                    "FROM Izlozba " +
+                    "WHERE Datum>=GETDATE()",
                     konekcija);
                 DataTable tabela = new DataTable();
                 SqlDataAdapter adapter = new SqlDataAdapter(komanda);
@@ -78,6 +82,32 @@ namespace A16_IzlozbaPasa_a
                 comboBoxIzlozba.DataSource = tabela;
                 comboBoxIzlozba.DisplayMember = "ImeIzlozbe";
                 comboBoxIzlozba.ValueMember = "IzlozbaID";
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Greska u citanju pasa!");
+            }
+            finally
+            {
+                konekcija.Close();
+            }
+        }
+        private void osveziIzlozbe2()
+        {
+
+            try
+            {
+                konekcija.Open();
+                SqlCommand komanda = new SqlCommand
+                    ("SELECT IzlozbaID," +
+                    "CONCAT(IzlozbaID,' - ',Mesto,' - ',Datum) " +
+                    "AS ImeIzlozbe " +
+                    "FROM Izlozba " +
+                    "WHERE Datum<=GETDATE()",
+                    konekcija);
+                DataTable tabela = new DataTable();
+                SqlDataAdapter adapter = new SqlDataAdapter(komanda);
+                adapter.Fill(tabela);
                 comboBox1.DataSource = tabela;
                 comboBox1.DisplayMember = "ImeIzlozbe";
                 comboBox1.ValueMember = "IzlozbaID";
@@ -183,6 +213,7 @@ namespace A16_IzlozbaPasa_a
                 "FROM Kategorija, Rezultat " +
                 "WHERE Kategorija.KategorijaID=Rezultat.KategorijaID " +
                 "AND Rezultat.IzlozbaID=@IzlozbaID " +
+                "AND LEN(Rezultat.Napomena)>0 " +
                 "GROUP BY Kategorija.KategorijaID, Kategorija.Naziv";
             SqlCommand komanda = new SqlCommand(upit, konekcija);
             komanda.Parameters.AddWithValue("@IzlozbaID", comboBox1.SelectedValue); 

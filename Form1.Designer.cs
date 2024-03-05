@@ -45,22 +45,22 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.buttonIzadji = new System.Windows.Forms.Button();
+            this.buttonPrikazi = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.labelIzaslo = new System.Windows.Forms.Label();
+            this.labelPrijavljeno = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.label6 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.labelPrijavljeno = new System.Windows.Forms.Label();
-            this.labelIzaslo = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.buttonPrikazi = new System.Windows.Forms.Button();
-            this.buttonIzadji = new System.Windows.Forms.Button();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -221,6 +221,95 @@
             this.tabPage2.Text = "Statistika";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // chart1
+            // 
+            chartArea1.Area3DStyle.Enable3D = true;
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
+            this.chart1.Location = new System.Drawing.Point(458, 19);
+            this.chart1.Name = "chart1";
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
+            this.chart1.Size = new System.Drawing.Size(309, 309);
+            this.chart1.TabIndex = 7;
+            this.chart1.Text = "chart1";
+            // 
+            // buttonIzadji
+            // 
+            this.buttonIzadji.BackColor = System.Drawing.Color.RoyalBlue;
+            this.buttonIzadji.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonIzadji.ForeColor = System.Drawing.Color.White;
+            this.buttonIzadji.Location = new System.Drawing.Point(218, 349);
+            this.buttonIzadji.Name = "buttonIzadji";
+            this.buttonIzadji.Size = new System.Drawing.Size(106, 52);
+            this.buttonIzadji.TabIndex = 6;
+            this.buttonIzadji.Text = "IZAĐI";
+            this.buttonIzadji.UseVisualStyleBackColor = false;
+            // 
+            // buttonPrikazi
+            // 
+            this.buttonPrikazi.BackColor = System.Drawing.Color.RoyalBlue;
+            this.buttonPrikazi.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonPrikazi.ForeColor = System.Drawing.Color.White;
+            this.buttonPrikazi.Location = new System.Drawing.Point(47, 349);
+            this.buttonPrikazi.Name = "buttonPrikazi";
+            this.buttonPrikazi.Size = new System.Drawing.Size(106, 52);
+            this.buttonPrikazi.TabIndex = 5;
+            this.buttonPrikazi.Text = "PRIKAŽI";
+            this.buttonPrikazi.UseVisualStyleBackColor = false;
+            this.buttonPrikazi.Click += new System.EventHandler(this.buttonPrikazi_Click);
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(20, 126);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersWidth = 51;
+            this.dataGridView1.RowTemplate.Height = 24;
+            this.dataGridView1.Size = new System.Drawing.Size(432, 217);
+            this.dataGridView1.TabIndex = 4;
+            // 
+            // labelIzaslo
+            // 
+            this.labelIzaslo.AutoSize = true;
+            this.labelIzaslo.Location = new System.Drawing.Point(17, 88);
+            this.labelIzaslo.Name = "labelIzaslo";
+            this.labelIzaslo.Size = new System.Drawing.Size(212, 16);
+            this.labelIzaslo.TabIndex = 3;
+            this.labelIzaslo.Text = "Ukupan broj pasa koji se takmičio:";
+            // 
+            // labelPrijavljeno
+            // 
+            this.labelPrijavljeno.AutoSize = true;
+            this.labelPrijavljeno.Location = new System.Drawing.Point(20, 60);
+            this.labelPrijavljeno.Name = "labelPrijavljeno";
+            this.labelPrijavljeno.Size = new System.Drawing.Size(212, 16);
+            this.labelPrijavljeno.TabIndex = 2;
+            this.labelPrijavljeno.Text = "Ukupan broj pasa koji je prijavljen:";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(72, 19);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(277, 24);
+            this.comboBox1.TabIndex = 1;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(17, 22);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(49, 16);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Izložba";
+            // 
             // tabPage3
             // 
             this.tabPage3.Location = new System.Drawing.Point(4, 25);
@@ -241,94 +330,6 @@
             this.tabPage4.Text = "Izlaz";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(17, 22);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(49, 16);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "Izložba";
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(72, 19);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(277, 24);
-            this.comboBox1.TabIndex = 1;
-            // 
-            // labelPrijavljeno
-            // 
-            this.labelPrijavljeno.AutoSize = true;
-            this.labelPrijavljeno.Location = new System.Drawing.Point(20, 60);
-            this.labelPrijavljeno.Name = "labelPrijavljeno";
-            this.labelPrijavljeno.Size = new System.Drawing.Size(212, 16);
-            this.labelPrijavljeno.TabIndex = 2;
-            this.labelPrijavljeno.Text = "Ukupan broj pasa koji je prijavljen:";
-            // 
-            // labelIzaslo
-            // 
-            this.labelIzaslo.AutoSize = true;
-            this.labelIzaslo.Location = new System.Drawing.Point(17, 88);
-            this.labelIzaslo.Name = "labelIzaslo";
-            this.labelIzaslo.Size = new System.Drawing.Size(212, 16);
-            this.labelIzaslo.TabIndex = 3;
-            this.labelIzaslo.Text = "Ukupan broj pasa koji se takmičio:";
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(20, 126);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(432, 217);
-            this.dataGridView1.TabIndex = 4;
-            // 
-            // buttonPrikazi
-            // 
-            this.buttonPrikazi.BackColor = System.Drawing.Color.RoyalBlue;
-            this.buttonPrikazi.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonPrikazi.ForeColor = System.Drawing.Color.White;
-            this.buttonPrikazi.Location = new System.Drawing.Point(47, 349);
-            this.buttonPrikazi.Name = "buttonPrikazi";
-            this.buttonPrikazi.Size = new System.Drawing.Size(106, 52);
-            this.buttonPrikazi.TabIndex = 5;
-            this.buttonPrikazi.Text = "PRIKAŽI";
-            this.buttonPrikazi.UseVisualStyleBackColor = false;
-            this.buttonPrikazi.Click += new System.EventHandler(this.buttonPrikazi_Click);
-            // 
-            // buttonIzadji
-            // 
-            this.buttonIzadji.BackColor = System.Drawing.Color.RoyalBlue;
-            this.buttonIzadji.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonIzadji.ForeColor = System.Drawing.Color.White;
-            this.buttonIzadji.Location = new System.Drawing.Point(218, 349);
-            this.buttonIzadji.Name = "buttonIzadji";
-            this.buttonIzadji.Size = new System.Drawing.Size(106, 52);
-            this.buttonIzadji.TabIndex = 6;
-            this.buttonIzadji.Text = "IZAĐI";
-            this.buttonIzadji.UseVisualStyleBackColor = false;
-            // 
-            // chart1
-            // 
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(458, 19);
-            this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Pie;
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(309, 309);
-            this.chart1.TabIndex = 7;
-            this.chart1.Text = "chart1";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -344,8 +345,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
